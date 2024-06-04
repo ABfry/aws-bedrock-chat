@@ -9,12 +9,9 @@ services:
       - 8000:8000
     volumes:
       - ./app:/src
-  #   environment:
-  #     - REDIS_URL=redis://redis:6379
-  # redis:
-  #   image: redis:6.0.6-alpine
-  #   container_name: redis_db
-  #   environment:
-  #     - LANG=C.UTF-8
-  #   ports:
-  #     - 6380:6379
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_DEFAULT_OUTPUT: json
+      TZ: Asia/Tokyo
