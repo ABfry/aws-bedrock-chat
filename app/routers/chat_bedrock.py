@@ -2,11 +2,13 @@ from fastapi import APIRouter
 import boto3
 import json
 
+from utils.chat_model import ChatModel
+
 chat_bedrock = APIRouter(prefix="/chat_bedrock", tags=["chat_bedrock"])
 
 
 @chat_bedrock.get("/api/bedrock")
-async def chat_claude():
+async def chat_claude(model: ChatModel = ChatModel.claude):
     bedrock = boto3.client(service_name="bedrock-runtime", region_name="ap-northeast-1")
 
     body = json.dumps(
@@ -18,7 +20,7 @@ async def chat_claude():
         }
     )
 
-    modelId = "anthropic.claude-v2:1"
+    modelId = model
     accept = "application/json"
     contentType = "application/json"
 
