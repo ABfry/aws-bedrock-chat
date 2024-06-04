@@ -18,7 +18,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-async def web():
-    return {"test": "success"}
+from routers import chat_bedrock
+app.include_router(chat_bedrock.chat_bedrock)
