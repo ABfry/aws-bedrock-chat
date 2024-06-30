@@ -8,15 +8,21 @@ chat_bedrock = APIRouter(prefix="/chat_bedrock", tags=["chat_bedrock"])
 
 
 @chat_bedrock.get("/api/bedrock")
-async def chat_claude(model: ChatModel = ChatModel.claude):
-    bedrock = boto3.client(service_name="bedrock-runtime", region_name="ap-northeast-1")
+async def chat_claude(model: ChatModel = ChatModel.claude35):
+    bedrock = boto3.client(service_name="bedrock-runtime", region_name="us-east-1")
 
     body = json.dumps(
         {
-            "prompt": "\n\nHuman:AWSについて教えて。\n\nAssistant:",
-            "max_tokens_to_sample": 1024,
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 10000,
             "temperature": 0.1,
             "top_p": 0.9,
+            "messages" : [
+                {
+                    "role": "user",
+                    "content": "AWSについて教えて。",
+                }
+            ]
         }
     )
 
@@ -30,5 +36,7 @@ async def chat_claude(model: ChatModel = ChatModel.claude):
 
     response_body = json.loads(response.get("body").read())
 
-    print(response_body.get("completion"))
+    answer = response_body["content"][0]["text"]
+
+    print(answer)
     pass
