@@ -14,13 +14,14 @@ async def chat_claude():
     prompt = "AWSについて教えて。"
     print(f"Prompt: {prompt}")
 
+    # model_idsで設定したリストの分だけ実行
     for model in model_ids:
         response = bedrock_converse(bedrock, model, prompt)
         print(f"Model : {model}\n{response}")
     pass
 
+# 使用したいモデルのリスト
 model_ids = {
-	# "anthropic.claude-3-haiku-20240307-v1:0",
  	"anthropic.claude-v2:1",
   	"anthropic.claude-3-haiku-20240307-v1:0",
     "anthropic.claude-3-5-sonnet-20240620-v1:0"
@@ -45,9 +46,9 @@ def bedrock_converse(client, id, prompt, max_tokens=300, temperature=0, top_p=0.
             "maxTokens": max_tokens,
             "topP": top_p
         }
-        #additionalModelRequestFields={
-        #}
     )
+
+    # 結果の抽出
     result = response['output']['message']['content'][0]['text'] \
     + '\n--- Latency: ' + str(response['metrics']['latencyMs']) \
     + 'ms - Input tokens:' + str(response['usage']['inputTokens']) \
