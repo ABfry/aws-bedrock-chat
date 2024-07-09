@@ -19,4 +19,8 @@ app.add_middleware(
 )
 
 from routers import chat_bedrock
+from routers import converse_api
+from routers import with_langchain
 app.include_router(chat_bedrock.chat_bedrock)
+app.include_router(converse_api.chat_bedrock)
+app.include_router(with_langchain.chat_langchain)
